@@ -1,26 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Admin, Resource } from 'react-admin';
+import authProvider from './authProvider';
+import jsonapiClient from 'ra-jsonapi-client';
+import { userList } from './Users';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const dataProvider = jsonapiClient('https://commerce-rpg.herokuapp.com');
+
+const App = () => (
+	<Admin authProvider={authProvider} dataProvider={dataProvider} requireAuth>
+		<Resource name='users/stats' list={userList} />
+	</Admin>
+);
 
 export default App;
